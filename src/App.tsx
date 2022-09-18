@@ -1,4 +1,3 @@
-import { useState } from "react";
 import CommentForm from "src/components/home/CommentForm";
 import CommentList from "src/components/home/CommentList";
 import Pagination from "src/components/Pagination";
@@ -8,27 +7,20 @@ import {
   useGetCommentsQuery,
 } from "src/services/comments";
 import { INIT_PAGE, INIT_FORM_VALUE, PAGE_LIMIT } from "./utils/constants";
+import { useStateWithReset } from "./utils/hooks";
 
 export type CommentFormValue = Partial<Comment>;
 
 export default function App() {
-  const [page, setPage] = useState(INIT_PAGE);
-  const [formInputs, setFormInputs] =
-    useState<CommentFormValue>(INIT_FORM_VALUE);
+  const [page, setPage, resetPage] = useStateWithReset(INIT_PAGE);
+  const [formInputs, setFormInputs, resetFormInputs] =
+    useStateWithReset<CommentFormValue>(INIT_FORM_VALUE);
 
   const { data } = useGetCommentsQuery({
     _limit: PAGE_LIMIT,
     _page: page.toString(),
   });
   const [deleteComment] = useDeleteCommentMutation();
-
-  const resetPage = () => {
-    setPage(() => INIT_PAGE);
-  };
-
-  const resetFormValue = () => {
-    setFormInputs(() => INIT_FORM_VALUE);
-  };
 
   const handleEiditButton = (comment: Comment) => {
     setFormInputs(() => ({ ...comment }));
@@ -62,7 +54,7 @@ export default function App() {
         formInputs={formInputs}
         onFormInputs={formInputsHandler}
         resetPage={resetPage}
-        resetFormValue={resetFormValue}
+        resetFormValue={resetFormInputs}
       />
     </div>
   );
