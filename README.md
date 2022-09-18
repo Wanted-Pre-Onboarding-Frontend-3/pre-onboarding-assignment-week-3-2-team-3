@@ -8,6 +8,12 @@
 
 <br><br>
 
+# 배포 링크
+
+- [링크](https://pre-onboarding-assignment-week-3-2-team-3-6xguxedu6-castlejun.vercel.app/)
+
+<br><br>
+
 # 목차
 
 - [원티드 프리온보딩 3주차 과제](#원티드-프리온보딩-3주차-과제)
