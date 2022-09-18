@@ -21,7 +21,6 @@ function CommentForm({
   resetFormValue,
   formInputs,
 }: ICommentForm) {
-  const formRef = useRef<HTMLFormElement>(null);
   const [addComment] = useAddCommentMutation();
   const [updateComment] = useUpdateCommentMutation();
 
@@ -58,7 +57,7 @@ function CommentForm({
 
   return (
     <FormStyle>
-      <form onSubmit={handleForm} ref={formRef}>
+      <form onSubmit={handleForm}>
         <input
           type="hidden"
           name="id"
