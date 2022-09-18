@@ -16,7 +16,13 @@ interface ICommentForm {
   resetFormValue: () => void;
 }
 
-function CommentForm({ resetPage, onFormInputs, resetFormValue, formInputs }: ICommentForm) {
+function CommentForm({
+  resetPage,
+  onFormInputs,
+  resetFormValue,
+  formInputs,
+}: ICommentForm) {
+  const formRef = useRef<HTMLFormElement>(null);
   const [addComment] = useAddCommentMutation();
   const [updateComment] = useUpdateCommentMutation();
 
@@ -25,17 +31,17 @@ function CommentForm({ resetPage, onFormInputs, resetFormValue, formInputs }: IC
 
     const { id, ...newComment } = formInputs;
     const currentISOString = getCurrentISOString();
+    const randomNum = Math.floor(Math.random() * 100);
+    const profileImg = `https://picsum.photos/id/${randomNum}/50/50`
     
     if (id) {
-      updateComment({ id, ...newComment, createdAt: currentISOString });
+      updateComment({ id, ...newComment, createdAt: currentISOString, profile_url: profileImg });
     }
-
     if (!id) {
-      addComment({ ...newComment, createdAt: currentISOString });
+      addComment({ ...newComment, createdAt: currentISOString , profile_url: profileImg });
       resetPage();
     }
-      resetFormValue();
-    }
+    resetFormValue();
   };
 
   return (
@@ -46,7 +52,7 @@ function CommentForm({ resetPage, onFormInputs, resetFormValue, formInputs }: IC
         name="profile_url"
         value={formInputs.profile_url}
         onChange={onFormInputs}
-        placeholder="https://picsum.photos/id/1/50/50"
+        placeholder="프로필 이미지는 랜덤으로 등록됩니다."
         required
       />
       
