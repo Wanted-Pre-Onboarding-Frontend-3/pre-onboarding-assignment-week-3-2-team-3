@@ -9,12 +9,9 @@ import {
 import { INIT_PAGE, INIT_FORM_VALUE, PAGE_LIMIT } from "./utils/constants";
 import { useStateWithReset } from "./utils/hooks";
 
-export type CommentFormValue = Partial<Comment>;
-
 export default function App() {
-  const [page, setPage, resetPage] = useStateWithReset(INIT_PAGE);
-  const [formInputs, setFormInputs, resetFormInputs] =
-    useStateWithReset<CommentFormValue>(INIT_FORM_VALUE);
+  const [page, setPage] = useState(INIT_PAGE);
+  const [formInputs, setFormInputs] = useState<Comment>(INIT_FORM_VALUE);
 
   const { data } = useGetCommentsQuery({
     _limit: PAGE_LIMIT,

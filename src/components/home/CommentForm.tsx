@@ -1,13 +1,18 @@
-import React from 'react';
-import { CommentFormValue } from 'src/App';
-import { useAddCommentMutation, useUpdateCommentMutation } from 'src/services/comments';
-import styled from 'styled-components';
-import { Button } from '../common/common';
+import React, { useRef } from "react";
+import {
+  Comment,
+  useAddCommentMutation,
+  useUpdateCommentMutation,
+} from "src/services/comments";
+import { getCurrentISOString } from "src/utils/functions";
+import styled from "styled-components";
 
 interface ICommentForm {
   resetPage: () => void;
-  formInputs: CommentFormValue;
-  onFormInputs: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  formInputs: Comment;
+  onFormInputs: React.ChangeEventHandler<
+    HTMLInputElement | HTMLTextAreaElement
+  >;
   resetFormValue: () => void;
 }
 
@@ -17,65 +22,52 @@ function CommentForm({ resetPage, onFormInputs, resetFormValue, formInputs }: IC
 
   const handleForm: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    const { author, content, createdAt, id, profile_url } = formInputs;
 
-    if (!id) {
-      addComment({
-        author,
-        content,
-        createdAt,
-        id: Math.ceil(Math.random() * 100000),
-        profile_url,
-      });
-      resetPage();
+    const { id, ...newComment } = formInputs;
+    const currentISOString = getCurrentISOString();
+    
+    if (id) {
+      updateComment({ id, ...newComment, createdAt: currentISOString });
     }
 
-    if (id) {
-      updateComment({
-        author,
-        content,
-        createdAt,
-        id,
-        profile_url,
-      });
+    if (!id) {
+      addComment({ ...newComment, createdAt: currentISOString });
+      resetPage();
+    }
       resetFormValue();
     }
   };
 
   return (
     <FormStyle onSubmit={handleForm}>
+      <label>프로필 이미지</label>
       <input
         type="text"
         name="profile_url"
-        value={formInputs?.profile_url}
+        value={formInputs.profile_url}
         onChange={onFormInputs}
         placeholder="https://picsum.photos/id/1/50/50"
+        required
       />
-
+      
+      <label>작성자</label>
       <input
         type="text"
         name="author"
         placeholder="작성자"
-        value={formInputs?.author}
+        value={formInputs.author}
         onChange={onFormInputs}
         required
       />
 
+      <label>내용</label>
       <textarea
         name="content"
         placeholder="내용"
-        value={formInputs?.content}
+        value={formInputs.content}
         onChange={onFormInputs}
         required
       ></textarea>
-
-      <input
-        type="text"
-        name="createdAt"
-        placeholder={'2022-09-19'}
-        value={formInputs?.createdAt}
-        onChange={onFormInputs}
-      />
 
       <Button type="submit">등록</Button>
     </FormStyle>

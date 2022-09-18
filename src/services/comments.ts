@@ -1,11 +1,12 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { WithRequiredProperty } from "./../utils/typeUtils";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export interface Comment {
-  id: number;
+  id?: number;
   profile_url: string;
   author: string;
   content: string;
-  createdAt: () => any;   // TODO: createdAt type지정
+  createdAt: string;
 }
 
 interface CommentsResult {
@@ -30,7 +31,7 @@ export const commentsApi = createApi({
         return 'comments';
       },
       transformResponse: (response: Comment[], _, arg) => {
-        const { _limit, _page, _order, _sort } = arg;
+        const { _limit, _page } = arg;
         const limit = parseInt(_limit, 10);
         const page = parseInt(_page, 10);
 
@@ -49,7 +50,7 @@ export const commentsApi = createApi({
           : [{ type: 'Comments', id: 'LIST' }],
     }),
 
-    addComment: builder.mutation<Comment, Partial<Comment>>({
+    addComment: builder.mutation<Comment, Omit<Comment, "id">>({
       query: (body) => ({
         url: 'comments',
         method: 'POST',
@@ -58,7 +59,10 @@ export const commentsApi = createApi({
       invalidatesTags: [{ type: 'Comments', id: 'LIST' }],
     }),
 
-    updateComment: builder.mutation<Comment, Partial<Comment>>({
+    updateComment: builder.mutation<
+      Comment,
+      WithRequiredProperty<Comment, "id">
+    >({
       query: ({ id, ...body }) => ({
         url: `comments/${id}`,
         method: 'PUT',
