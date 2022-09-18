@@ -28,11 +28,13 @@ function CommentForm({
 
   const handleForm: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+
     const { id, ...newComment } = formInputs;
     const currentISOString = getCurrentISOString();
     if (id) {
       updateComment({ id, ...newComment, createdAt: currentISOString });
-    } else {
+    }
+    if (!id) {
       addComment({ ...newComment, createdAt: currentISOString });
       resetPage();
     }
@@ -42,6 +44,7 @@ function CommentForm({
   return (
     <FormStyle>
       <form onSubmit={handleForm} ref={formRef}>
+        <label>프로필 이미지</label>
         <input
           type="url"
           name="profile_url"
@@ -51,6 +54,7 @@ function CommentForm({
           required
         />
         <br />
+        <label>작성자</label>
         <input
           type="text"
           name="author"
@@ -60,6 +64,7 @@ function CommentForm({
           required
         />
         <br />
+        <label>내용</label>
         <textarea
           name="content"
           placeholder="내용"
