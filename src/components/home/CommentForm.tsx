@@ -4,6 +4,7 @@ import {
   useAddCommentMutation,
   useUpdateCommentMutation,
 } from "src/services/comments";
+import { getCurrentISOString } from "src/utils/functions";
 import styled from "styled-components";
 
 interface ICommentForm {
@@ -28,11 +29,11 @@ function CommentForm({
   const handleForm: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const { id, ...newComment } = formInputs;
-    const nowISOString = new Date().toISOString().slice(0, 10);
+    const currentISOString = getCurrentISOString();
     if (id) {
-      updateComment({ id, ...newComment, createdAt: nowISOString });
+      updateComment({ id, ...newComment, createdAt: currentISOString });
     } else {
-      addComment({ ...newComment, createdAt: nowISOString });
+      addComment({ ...newComment, createdAt: currentISOString });
       resetPage();
     }
     resetFormValue();
