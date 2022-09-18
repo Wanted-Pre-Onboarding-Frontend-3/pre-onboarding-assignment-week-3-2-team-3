@@ -1,6 +1,6 @@
-import { Comment } from "src/services/comments";
-import styled from "styled-components";
-import { Button, Flex } from "../common/common";
+import { Comment } from 'src/services/comments';
+import styled from 'styled-components';
+import { Button, Flex } from '../common/common';
 
 interface ICommentList {
   comments?: Comment[];
@@ -27,12 +27,14 @@ function CommentList({ comments, onDeleteButton, onEditButton }: ICommentList) {
 
           <CreatedAt>{comment.createdAt}</CreatedAt>
 
-          <Content>{comment.content}</Content>
+          <Section>
+            <Content>{comment.content}</Content>
 
-          <Flex gap={8}>
-            <Button onClick={handleEditButton(comment)}>수정</Button>
-            <Button onClick={handleDeleteButton(comment)}>삭제</Button>
-          </Flex>
+            <Flex gap={8}>
+              <Button onClick={handleEditButton(comment)}>수정</Button>
+              <Button onClick={handleDeleteButton(comment)}>삭제</Button>
+            </Flex>
+          </Section>
 
           <hr />
         </CommentWrapper>
@@ -59,8 +61,16 @@ const CommentWrapper = styled.div`
 const CreatedAt = styled.div`
   float: right;
   vertical-align: middle;
+  font-size: 0.9em;
+  padding-right: 0.6em;
 `;
 
 const Content = styled.div`
-  margin: 10px 0;
+  margin: 16px 0 20px 6px;
+`;
+
+const Section = styled.section`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
