@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
-import { CommentFormValue } from "src/App";
 import {
+  Comment,
   useAddCommentMutation,
   useUpdateCommentMutation,
 } from "src/services/comments";
@@ -8,7 +8,7 @@ import styled from "styled-components";
 
 interface ICommentForm {
   resetPage: () => void;
-  formInputs: CommentFormValue;
+  formInputs: Comment;
   onFormInputs: React.ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
   >;
@@ -27,48 +27,24 @@ function CommentForm({
 
   const handleForm: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    const { author, content, createdAt, id, profile_url } = formInputs;
-
-    if (!author) alert("이름을 입력해주세요");
-    if (!content) alert("내용을 입력해주세요");
-    if (!createdAt) alert("날짜을 입력해주세요");
-    if (!profile_url) alert("프로필 주소를 입력해주세요");
-
-    if (!id) {
-      addComment({
-        author,
-        content,
-        createdAt,
-        id: Math.ceil(Math.random() * 100000),
-        profile_url,
-      });
+    const { id, ...newComment } = formInputs;
+    const nowISOString = new Date().toISOString().slice(0, 10);
+    if (id) {
+      updateComment({ id, ...newComment, createdAt: nowISOString });
+    } else {
+      addComment({ ...newComment, createdAt: nowISOString });
       resetPage();
     }
-    if (id) {
-      updateComment({
-        author,
-        content,
-        createdAt,
-        id,
-        profile_url,
-      });
-      resetFormValue();
-    }
+    resetFormValue();
   };
 
   return (
     <FormStyle>
       <form onSubmit={handleForm} ref={formRef}>
         <input
-          type="hidden"
-          name="id"
-          value={formInputs?.id}
-          onChange={() => {}}
-        />
-        <input
-          type="text"
+          type="url"
           name="profile_url"
-          value={formInputs?.profile_url}
+          value={formInputs.profile_url}
           onChange={onFormInputs}
           placeholder="https://picsum.photos/id/1/50/50"
           required
@@ -78,26 +54,18 @@ function CommentForm({
           type="text"
           name="author"
           placeholder="작성자"
-          value={formInputs?.author}
+          value={formInputs.author}
           onChange={onFormInputs}
+          required
         />
         <br />
         <textarea
           name="content"
           placeholder="내용"
-          value={formInputs?.content}
+          value={formInputs.content}
           onChange={onFormInputs}
           required
         ></textarea>
-        <br />
-        <input
-          type="text"
-          name="createdAt"
-          placeholder="2020-05-30"
-          value={formInputs?.createdAt}
-          onChange={onFormInputs}
-          required
-        />
         <br />
         <button type="submit">등록</button>
       </form>
@@ -117,7 +85,7 @@ const FormStyle = styled.div`
     width: 98%;
     height: 50px;
   }
-  & > form > input[type="text"] {
+  & > form > input {
     padding: 5px 1%;
     width: 98%;
     margin-bottom: 10px;

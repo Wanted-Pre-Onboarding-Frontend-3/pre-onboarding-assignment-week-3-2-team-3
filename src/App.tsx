@@ -9,12 +9,9 @@ import {
 } from "src/services/comments";
 import { INIT_PAGE, INIT_FORM_VALUE, PAGE_LIMIT } from "./utils/constants";
 
-export type CommentFormValue = Partial<Comment>;
-
 export default function App() {
   const [page, setPage] = useState(INIT_PAGE);
-  const [formInputs, setFormInputs] =
-    useState<CommentFormValue>(INIT_FORM_VALUE);
+  const [formInputs, setFormInputs] = useState<Comment>(INIT_FORM_VALUE);
 
   const { data } = useGetCommentsQuery({
     _limit: PAGE_LIMIT,
