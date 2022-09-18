@@ -1,46 +1,162 @@
-# Getting Started with Create React App
+# 원티드 프리온보딩 3주차 과제
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- 원티드 프리온보딩 프론트엔드 코스 6기 3-2 과제(스파크펫)
 
-## Available Scripts
+- 과제 목표 : 댓글 목록 CRUD 및 페이지네이션
 
-In the project directory, you can run:
+- 수행 기간 : 2022/09/16 ~ 2022/09/19
 
-### `npm start`
+<br><br>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# 목차
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- [원티드 프리온보딩 3주차 과제](#원티드-프리온보딩-3주차-과제)
+- [목차](#목차)
+- [3팀 소개 및 역할](#3팀-소개-및-역할)
+- [기술 스택](#기술-스택)
+- [실행방법](#실행방법)
+- [프로젝트 구조](#프로젝트-구조)
+- [과제 요건 및 구현 내용](#과제-요건-및-구현-내용)
+ * [과제 요건](#과제-요건)
+ * [데모 영상](#데모-영상)
+ * [기능별 코멘트](#기능별-코멘트)
+- [컨벤션 링크](#컨벤션-링크)
 
-### `npm test`
+<br><br>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# 3팀 소개 및 역할
 
-### `npm run build`
+| 이름   | 역할                                     |
+| ------ | ---------------------------------------- |
+| 김리후 |                         |
+| 이경준 |                         |
+| 이혜성 | **팀장** /  |
+| 문선화 |                          |
+| 홍성준 |                               |
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<br><br>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# 기술 스택
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- TypeScript, React, Redux, Redux-Logger, Redux-Devtools, Redux-toolkit
 
-### `npm run eject`
+- Styled-components
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Json-server
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br><br>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+# 실행방법
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. Install
 
-## Learn More
+```bash
+ $ npm install
+```
+<br>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. start the api
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+ $ npm run api
+```
+<br>
+
+3. start the project
+
+```
+ $ npm start
+```
+
+<br><br>
+
+# 프로젝트 구조
+
+<details>
+
+<summary>프로젝트 구조</summary>
+
+```
+📦src
+ ┣ 📂components
+ ┃ ┣ 📂common
+ ┃ ┃ ┗ 📜common.ts
+ ┃ ┣ 📂home
+ ┃ ┃ ┣ 📜CommentForm.tsx
+ ┃ ┃ ┗ 📜CommentList.tsx
+ ┃ ┗ 📜Pagination.tsx
+ ┣ 📂services
+ ┃ ┗ 📜comments.ts
+ ┣ 📂store
+ ┃ ┗ 📜store.ts
+ ┣ 📂utils
+ ┃ ┣ 📜constants.ts
+ ┃ ┣ 📜functions.ts
+ ┃ ┣ 📜hooks.ts
+ ┃ ┗ 📜typeUtils.ts
+ ┣ 📜App.test.tsx
+ ┣ 📜App.tsx
+ ┣ 📜index.tsx
+ ┣ 📜react-app-env.d.ts
+ ┣ 📜reportWebVitals.ts
+ ┗ 📜setupTests.ts
+```
+
+</details>
+
+<br><br>
+
+# 과제 요건 및 구현 내용
+
+## 과제 요건
+
+
+```
+- 댓글 CRUD
+- 페이지네이션
+- 댓글 작성, 수정, 삭제 후 동작
+  - 댓글 작성하고 난 뒤: 다른 페이지에 위치하고 있었더라도 1페이지로 이동, 입력 폼 초기화
+  - 댓글 수정하고 난 뒤: 현재 보고있는 페이지 유지, 입력 폼 초기화
+  - 삭제하고 난 뒤: 1페이지로 이동
+
+- Redux logger, Redux-Devtools 설정
+- Redux를 이용한 비동기 처리
+```
+
+<br>
+
+## 데모 영상
+
+<br><br>
+
+## 기능별 코멘트
+
+- 댓글 CRUD
+
+  - 구현내용
+  
+  - 논의내용
+
+- 페이지네이션
+
+  - 구현내용
+  
+  - 논의내용
+
+- Redux logger, Redux-Devtools 설정
+  
+  - 구현내용
+  
+  - 논의내용
+
+- Redux를 이용한 비동기 처리
+  
+  - 구현내용
+  
+  - 논의내용
+
+<br><br>
+
+# 컨벤션 링크
+
+[링크](https://sunhwaday.notion.site/c0ff2ba4723c42a289ab9021e8aa95ba)
