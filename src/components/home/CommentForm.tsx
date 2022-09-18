@@ -39,7 +39,6 @@ function CommentForm({
         id,
         ...newComment,
         createdAt: currentISOString,
-        profile_url: profileImg,
       });
     }
     if (!id) {
