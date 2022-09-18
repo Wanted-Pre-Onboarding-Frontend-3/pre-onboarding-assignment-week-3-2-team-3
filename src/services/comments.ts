@@ -30,17 +30,17 @@ export const commentsApi = createApi({
         return "comments";
       },
       transformResponse: (response: Comment[], _, arg) => {
-        const { _limit, _page, _order, _sort } = arg;
+        const { _limit, _page } = arg;
         const limit = parseInt(_limit, 10);
         const page = parseInt(_page, 10);
 
-        const pagenated2DArray = [];
+        const paginated2DAArray = [];
 
         for (let i = 0; i < response.length; i += limit)
-          pagenated2DArray.push(response.slice(i, i + limit));
+          paginated2DAArray.push(response.slice(i, i + limit));
 
         return {
-          comments: pagenated2DArray?.[page - 1],
+          comments: paginated2DAArray?.[page - 1],
           totalCount: response.length,
         };
       },

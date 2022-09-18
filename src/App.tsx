@@ -30,7 +30,7 @@ export default function App() {
     setFormInputs(() => INIT_FORM_VALUE);
   };
 
-  const handleEiditButton = (comment: Comment) => {
+  const handleEditButton = (comment: Comment) => {
     setFormInputs(() => ({ ...comment }));
   };
 
@@ -50,7 +50,7 @@ export default function App() {
       <CommentList
         comments={data?.comments}
         onDeleteButton={handleDeleteButton}
-        onEditButton={handleEiditButton}
+        onEditButton={handleEditButton}
       />
       <Pagination
         totalCount={data?.totalCount}

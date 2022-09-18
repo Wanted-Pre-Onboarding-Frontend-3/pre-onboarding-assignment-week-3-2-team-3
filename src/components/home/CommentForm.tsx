@@ -88,7 +88,7 @@ function CommentForm({
           value={formInputs?.content}
           onChange={onFormInputs}
           required
-        ></textarea>
+        />
         <br />
         <input
           type="text"
