@@ -28,7 +28,6 @@ function CommentForm({ resetPage, onFormInputs, resetFormValue, formInputs }: IC
         id,
         ...newComment,
         createdAt: currentISOString,
-        profile_url: profileImg,
       });
     }
     
