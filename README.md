@@ -6,6 +6,11 @@
 
 - 수행 기간 : 2022/09/16 ~ 2022/09/19
 
+
+# 배포 링크
+
+- [링크](https://pre-onboarding-assignment-week-3-2-team-3-6xguxedu6-castlejun.vercel.app/)
+
 <br><br>
 
 # 목차
