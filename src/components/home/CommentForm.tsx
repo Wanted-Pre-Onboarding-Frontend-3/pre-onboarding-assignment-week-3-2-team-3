@@ -28,19 +28,22 @@ function CommentForm({
   const handleForm: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const { author, content, createdAt, id, profile_url } = formInputs;
-
+    
+    
     if (!author) alert("이름을 입력해주세요");
     if (!content) alert("내용을 입력해주세요");
-    if (!createdAt) alert("날짜을 입력해주세요");
-    if (!profile_url) alert("프로필 주소를 입력해주세요");
+
+    const randomNum = Math.floor(Math.random() * 100);
+    const date = new Date().toLocaleDateString().replaceAll('. ', '-').slice(0, -1);
+    const profileImg = `https://picsum.photos/id/${randomNum}/50/50`
 
     if (!id) {
       addComment({
         author,
         content,
-        createdAt,
+        createdAt : date,
         id: Math.ceil(Math.random() * 100000),
-        profile_url,
+        profile_url: profileImg,
       });
       resetPage();
     }
@@ -70,8 +73,8 @@ function CommentForm({
           name="profile_url"
           value={formInputs?.profile_url}
           onChange={onFormInputs}
-          placeholder="https://picsum.photos/id/1/50/50"
-          required
+          placeholder="프로필 이미지는 랜덤으로 등록됩니다."
+          disabled={true}
         />
         <br />
         <input
@@ -93,10 +96,10 @@ function CommentForm({
         <input
           type="text"
           name="createdAt"
-          placeholder="2020-05-30"
+          placeholder="2022-09-18"
           value={formInputs?.createdAt}
           onChange={onFormInputs}
-          required
+          disabled={true}
         />
         <br />
         <button type="submit">등록</button>
