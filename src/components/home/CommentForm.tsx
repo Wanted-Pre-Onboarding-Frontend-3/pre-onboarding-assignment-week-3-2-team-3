@@ -42,8 +42,6 @@ function CommentForm({ resetPage, onFormInputs, resetFormValue, formInputs }: IC
     }
   };
 
-  console.log(formInputs);
-
   return (
     <FormStyle onSubmit={handleForm}>
       <input
