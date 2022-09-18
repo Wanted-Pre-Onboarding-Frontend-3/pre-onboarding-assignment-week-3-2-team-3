@@ -23,7 +23,7 @@ interface CommentsSearchParams {
 
 export const commentsApi = createApi({
   reducerPath: 'commentsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4000/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://json-server-vercel1.vercel.app/' }),
   tagTypes: ['Comments'],
   endpoints: (builder) => ({
     getComments: builder.query<CommentsResult, CommentsSearchParams>({
