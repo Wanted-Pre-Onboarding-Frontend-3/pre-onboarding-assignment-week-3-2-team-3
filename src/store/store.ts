@@ -1,5 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import logger from "redux-logger";
+
 import { commentsApi } from "src/services/comments";
 
 export const store = configureStore({
@@ -7,7 +9,7 @@ export const store = configureStore({
     [commentsApi.reducerPath]: commentsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(commentsApi.middleware),
+    getDefaultMiddleware().concat(commentsApi.middleware).concat(logger),
 });
 setupListeners(store.dispatch);
 
