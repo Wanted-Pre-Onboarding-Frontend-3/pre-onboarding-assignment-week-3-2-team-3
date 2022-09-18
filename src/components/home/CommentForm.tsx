@@ -39,11 +39,12 @@ function CommentForm({
         author,
         content,
         createdAt,
-        id: Math.ceil(Math.random() * 100000),
+        id: new Date().getTime(),
         profile_url,
       });
       resetPage();
     }
+
     if (id) {
       updateComment({
         author,
