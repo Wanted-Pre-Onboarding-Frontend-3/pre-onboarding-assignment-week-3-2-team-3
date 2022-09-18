@@ -1,28 +1,17 @@
-import React from "react";
-import {
-  Comment,
-  useAddCommentMutation,
-  useUpdateCommentMutation,
-} from "src/services/comments";
-import { getCurrentISOString } from "src/utils/functions";
-import styled from "styled-components";
-import { Button } from "../common/common";
+import React from 'react';
+import { Comment, useAddCommentMutation, useUpdateCommentMutation } from 'src/services/comments';
+import { getCurrentISOString } from 'src/utils/functions';
+import styled from 'styled-components';
+import { Button } from '../common/common';
 
 interface ICommentForm {
   resetPage: () => void;
   formInputs: Comment;
-  onFormInputs: React.ChangeEventHandler<
-    HTMLInputElement | HTMLTextAreaElement
-  >;
+  onFormInputs: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   resetFormValue: () => void;
 }
 
-function CommentForm({
-  resetPage,
-  onFormInputs,
-  resetFormValue,
-  formInputs,
-}: ICommentForm) {
+function CommentForm({ resetPage, onFormInputs, resetFormValue, formInputs }: ICommentForm) {
   const [addComment] = useAddCommentMutation();
   const [updateComment] = useUpdateCommentMutation();
 
@@ -42,6 +31,7 @@ function CommentForm({
         profile_url: profileImg,
       });
     }
+    
     if (!id) {
       addComment({
         ...newComment,
@@ -99,14 +89,19 @@ const FormStyle = styled.form`
     width: 100%;
     height: 50px;
     padding: 5px 1%;
-    margin-bottom: 10px;
+    margin: 10px 0;
     box-sizing: border-box;
   }
 
-  input[type="text"] {
+  label {
+    font-weight: bold;
+    font-size: 0.95em;
+  }
+
+  input[type='text'] {
     width: 100%;
     padding: 5px 1%;
-    margin-bottom: 10px;
+    margin: 10px 0;
     border: 1px solid rgb(133, 133, 133);
     box-sizing: border-box;
   }
