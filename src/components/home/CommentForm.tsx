@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
   Comment,
   useAddCommentMutation,
@@ -6,6 +6,7 @@ import {
 } from "src/services/comments";
 import { getCurrentISOString } from "src/utils/functions";
 import styled from "styled-components";
+import { Button } from "../common/common";
 
 interface ICommentForm {
   resetPage: () => void;
@@ -22,7 +23,6 @@ function CommentForm({
   resetFormValue,
   formInputs,
 }: ICommentForm) {
-  const formRef = useRef<HTMLFormElement>(null);
   const [addComment] = useAddCommentMutation();
   const [updateComment] = useUpdateCommentMutation();
 
@@ -32,13 +32,22 @@ function CommentForm({
     const { id, ...newComment } = formInputs;
     const currentISOString = getCurrentISOString();
     const randomNum = Math.floor(Math.random() * 100);
-    const profileImg = `https://picsum.photos/id/${randomNum}/50/50`
-    
+    const profileImg = `https://picsum.photos/id/${randomNum}/50/50`;
+
     if (id) {
-      updateComment({ id, ...newComment, createdAt: currentISOString, profile_url: profileImg });
+      updateComment({
+        id,
+        ...newComment,
+        createdAt: currentISOString,
+        profile_url: profileImg,
+      });
     }
     if (!id) {
-      addComment({ ...newComment, createdAt: currentISOString , profile_url: profileImg });
+      addComment({
+        ...newComment,
+        createdAt: currentISOString,
+        profile_url: profileImg,
+      });
       resetPage();
     }
     resetFormValue();
@@ -55,7 +64,7 @@ function CommentForm({
         placeholder="프로필 이미지는 랜덤으로 등록됩니다."
         required
       />
-      
+
       <label>작성자</label>
       <input
         type="text"
@@ -94,7 +103,7 @@ const FormStyle = styled.form`
     box-sizing: border-box;
   }
 
-  input[type='text'] {
+  input[type="text"] {
     width: 100%;
     padding: 5px 1%;
     margin-bottom: 10px;
