@@ -1,14 +1,15 @@
 import React, { useRef } from "react";
-import { CommentFormValue } from "src/App";
 import {
+  Comment,
   useAddCommentMutation,
   useUpdateCommentMutation,
 } from "src/services/comments";
+import { getCurrentISOString } from "src/utils/functions";
 import styled from "styled-components";
 
 interface ICommentForm {
   resetPage: () => void;
-  formInputs: CommentFormValue;
+  formInputs: Comment;
   onFormInputs: React.ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
   >;
@@ -27,108 +28,77 @@ function CommentForm({
 
   const handleForm: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    const { author, content, createdAt, id, profile_url } = formInputs;
-    
-    
-    if (!author) alert("이름을 입력해주세요");
-    if (!content) alert("내용을 입력해주세요");
 
+    const { id, ...newComment } = formInputs;
+    const currentISOString = getCurrentISOString();
     const randomNum = Math.floor(Math.random() * 100);
-    const date = new Date().toLocaleDateString().replaceAll('. ', '-').slice(0, -1);
     const profileImg = `https://picsum.photos/id/${randomNum}/50/50`
-
+    
+    if (id) {
+      updateComment({ id, ...newComment, createdAt: currentISOString, profile_url: profileImg });
+    }
     if (!id) {
-      addComment({
-        author,
-        content,
-        createdAt : date,
-        id: Math.ceil(Math.random() * 100000),
-        profile_url: profileImg,
-      });
+      addComment({ ...newComment, createdAt: currentISOString , profile_url: profileImg });
       resetPage();
     }
-    if (id) {
-      updateComment({
-        author,
-        content,
-        createdAt,
-        id,
-        profile_url,
-      });
-      resetFormValue();
-    }
+    resetFormValue();
   };
 
   return (
-    <FormStyle>
-      <form onSubmit={handleForm} ref={formRef}>
-        <input
-          type="hidden"
-          name="id"
-          value={formInputs?.id}
-          onChange={() => {}}
-        />
-        <input
-          type="text"
-          name="profile_url"
-          value={formInputs?.profile_url}
-          onChange={onFormInputs}
-          placeholder="프로필 이미지는 랜덤으로 등록됩니다."
-          disabled={true}
-        />
-        <br />
-        <input
-          type="text"
-          name="author"
-          placeholder="작성자"
-          value={formInputs?.author}
-          onChange={onFormInputs}
-        />
-        <br />
-        <textarea
-          name="content"
-          placeholder="내용"
-          value={formInputs?.content}
-          onChange={onFormInputs}
-          required
-        ></textarea>
-        <br />
-        <input
-          type="text"
-          name="createdAt"
-          placeholder="2022-09-18"
-          value={formInputs?.createdAt}
-          onChange={onFormInputs}
-          disabled={true}
-        />
-        <br />
-        <button type="submit">등록</button>
-      </form>
+    <FormStyle onSubmit={handleForm}>
+      <label>프로필 이미지</label>
+      <input
+        type="text"
+        name="profile_url"
+        value={formInputs.profile_url}
+        onChange={onFormInputs}
+        placeholder="프로필 이미지는 랜덤으로 등록됩니다."
+        required
+      />
+      
+      <label>작성자</label>
+      <input
+        type="text"
+        name="author"
+        placeholder="작성자"
+        value={formInputs.author}
+        onChange={onFormInputs}
+        required
+      />
+
+      <label>내용</label>
+      <textarea
+        name="content"
+        placeholder="내용"
+        value={formInputs.content}
+        onChange={onFormInputs}
+        required
+      ></textarea>
+
+      <Button type="submit">등록</Button>
     </FormStyle>
   );
 }
 
 export default CommentForm;
 
-const FormStyle = styled.div`
-  & > form {
-    padding: 0 10px;
-    margin-bottom: 50px;
-  }
-  & > form > textarea {
-    padding: 5px 1%;
-    width: 98%;
+const FormStyle = styled.form`
+  padding: 0 10px;
+  margin: 50px 0;
+
+  textarea {
+    width: 100%;
     height: 50px;
-  }
-  & > form > input[type="text"] {
     padding: 5px 1%;
-    width: 98%;
     margin-bottom: 10px;
+    box-sizing: border-box;
   }
-  & > form > button {
-    padding: 0.375rem 0.75rem;
-    border-radius: 0.25rem;
-    border: 1px solid lightgray;
-    cursor: pointer;
+
+  input[type='text'] {
+    width: 100%;
+    padding: 5px 1%;
+    margin-bottom: 10px;
+    border: 1px solid rgb(133, 133, 133);
+    box-sizing: border-box;
   }
 `;

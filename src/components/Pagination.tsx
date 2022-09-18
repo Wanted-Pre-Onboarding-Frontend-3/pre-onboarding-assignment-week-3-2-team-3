@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Button } from "./common/common";
+import styled from 'styled-components';
+import { Button } from './common/common';
 
 interface IPagination {
   totalCount?: number;
@@ -8,13 +8,7 @@ interface IPagination {
   onChange: (number: number) => void;
 }
 
-export default function Pagination({
-  totalCount = 0,
-  pagePerCount,
-  page,
-  onChange,
-  ...props
-}: IPagination) {
+export default function Pagination({ totalCount = 0, pagePerCount, page, onChange, ...props }: IPagination) {
   const pageLength = Math.ceil(totalCount / pagePerCount);
   const paginationList = [...new Array(pageLength)];
 
@@ -30,28 +24,31 @@ export default function Pagination({
     onChange(page);
   };
 
+  const renderPaginationList = () => {
+    return (
+      <>
+        {paginationList.map((_, i) => {
+          const pageNumber = i + 1;
+
+          return (
+            <ButtonWrapper key={pageNumber} onClick={handlePageButton(pageNumber)} active={pageNumber === page}>
+              {pageNumber}
+            </ButtonWrapper>
+          );
+        })}
+      </>
+    );
+  };
+
   return (
     <PaginationList {...props}>
       <ButtonWrapper onClick={handlePrevButton} disabled={page === 1}>
         &lt;
       </ButtonWrapper>
-      {paginationList.map((_, i) => {
-        const pageNumber = i + 1;
 
-        return (
-          <ButtonWrapper
-            key={pageNumber}
-            onClick={handlePageButton(pageNumber)}
-            active={pageNumber === page}
-          >
-            {pageNumber}
-          </ButtonWrapper>
-        );
-      })}
-      <ButtonWrapper
-        onClick={handleNextButton}
-        disabled={page === paginationList.length}
-      >
+      {renderPaginationList()}
+
+      <ButtonWrapper onClick={handleNextButton} disabled={page === paginationList.length}>
         &gt;
       </ButtonWrapper>
     </PaginationList>
@@ -60,15 +57,17 @@ export default function Pagination({
 
 const PaginationList = styled.ol`
   display: flex;
-  gap: 2px;
+  gap: 4px;
+  user-select: none;
+  justify-content: center;
 `;
 
 const ButtonWrapper = styled(Button)`
   border: 1px solid black;
-  background-color: transparent;
-  border-radius: 8px;
+  border-radius: 4px;
   min-width: 24px;
   padding: 4px;
-  font-weight: ${(props) => (props.active ? "bold" : "normal")};
-  border-width: ${(props) => (props.active ? "2px" : "1px")};
+  background-color: ${({ active }) => (active ? 'gray' : 'transparent')};
+  color: ${({ active }) => (active ? 'white' : 'black')};
+  font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
 `;
