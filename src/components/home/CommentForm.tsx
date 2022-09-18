@@ -62,7 +62,7 @@ function CommentForm({
         value={formInputs.profile_url}
         onChange={onFormInputs}
         placeholder="프로필 이미지는 랜덤으로 등록됩니다."
-        required
+        disabled={true}
       />
 
       <label>작성자</label>
