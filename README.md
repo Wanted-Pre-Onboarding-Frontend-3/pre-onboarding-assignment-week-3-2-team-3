@@ -127,11 +127,17 @@
 
 ## 데모 영상
 
+### [댓글 등록]
+<img src="https://user-images.githubusercontent.com/81549337/190916329-6ad8a609-ff1e-4f92-b876-38f908604c13.gif" width="800px" />
+
 ### [댓글 수정]
-![수정](https://user-images.githubusercontent.com/105709187/190916023-a2909218-384d-4a6d-8f91-48095551d18c.gif)
+<img src="https://user-images.githubusercontent.com/105709187/190916023-a2909218-384d-4a6d-8f91-48095551d18c.gif" width="800px" />
 
 ### [댓글 삭제]
-![삭제](https://user-images.githubusercontent.com/105709187/190916033-e01df592-76f1-4136-8397-9dc15c815d9f.gif)
+<img src="https://user-images.githubusercontent.com/105709187/190916033-e01df592-76f1-4136-8397-9dc15c815d9f.gif" width="800px" />
+
+### [페이지 이동]
+<img src="https://user-images.githubusercontent.com/81549337/190916509-d38997af-6cd9-461c-9991-d95b9e10d6c6.gif" width="800px" />
 
 <br><br>
 
