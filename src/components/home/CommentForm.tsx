@@ -16,13 +16,7 @@ interface ICommentForm {
   resetFormValue: () => void;
 }
 
-function CommentForm({
-  resetPage,
-  onFormInputs,
-  resetFormValue,
-  formInputs,
-}: ICommentForm) {
-  const formRef = useRef<HTMLFormElement>(null);
+function CommentForm({ resetPage, onFormInputs, resetFormValue, formInputs }: ICommentForm) {
   const [addComment] = useAddCommentMutation();
   const [updateComment] = useUpdateCommentMutation();
 
@@ -31,75 +25,74 @@ function CommentForm({
 
     const { id, ...newComment } = formInputs;
     const currentISOString = getCurrentISOString();
+    
     if (id) {
       updateComment({ id, ...newComment, createdAt: currentISOString });
     }
+
     if (!id) {
       addComment({ ...newComment, createdAt: currentISOString });
       resetPage();
     }
-    resetFormValue();
+      resetFormValue();
+    }
   };
 
   return (
-    <FormStyle>
-      <form onSubmit={handleForm} ref={formRef}>
-        <label>프로필 이미지</label>
-        <input
-          type="url"
-          name="profile_url"
-          value={formInputs.profile_url}
-          onChange={onFormInputs}
-          placeholder="https://picsum.photos/id/1/50/50"
-          required
-        />
-        <br />
-        <label>작성자</label>
-        <input
-          type="text"
-          name="author"
-          placeholder="작성자"
-          value={formInputs.author}
-          onChange={onFormInputs}
-          required
-        />
-        <br />
-        <label>내용</label>
-        <textarea
-          name="content"
-          placeholder="내용"
-          value={formInputs.content}
-          onChange={onFormInputs}
-          required
-        ></textarea>
-        <br />
-        <button type="submit">등록</button>
-      </form>
+    <FormStyle onSubmit={handleForm}>
+      <label>프로필 이미지</label>
+      <input
+        type="text"
+        name="profile_url"
+        value={formInputs.profile_url}
+        onChange={onFormInputs}
+        placeholder="https://picsum.photos/id/1/50/50"
+        required
+      />
+      
+      <label>작성자</label>
+      <input
+        type="text"
+        name="author"
+        placeholder="작성자"
+        value={formInputs.author}
+        onChange={onFormInputs}
+        required
+      />
+
+      <label>내용</label>
+      <textarea
+        name="content"
+        placeholder="내용"
+        value={formInputs.content}
+        onChange={onFormInputs}
+        required
+      ></textarea>
+
+      <Button type="submit">등록</Button>
     </FormStyle>
   );
 }
 
 export default CommentForm;
 
-const FormStyle = styled.div`
-  & > form {
-    padding: 0 10px;
-    margin-bottom: 50px;
-  }
-  & > form > textarea {
-    padding: 5px 1%;
-    width: 98%;
+const FormStyle = styled.form`
+  padding: 0 10px;
+  margin: 50px 0;
+
+  textarea {
+    width: 100%;
     height: 50px;
-  }
-  & > form > input {
     padding: 5px 1%;
-    width: 98%;
     margin-bottom: 10px;
+    box-sizing: border-box;
   }
-  & > form > button {
-    padding: 0.375rem 0.75rem;
-    border-radius: 0.25rem;
-    border: 1px solid lightgray;
-    cursor: pointer;
+
+  input[type='text'] {
+    width: 100%;
+    padding: 5px 1%;
+    margin-bottom: 10px;
+    border: 1px solid rgb(133, 133, 133);
+    box-sizing: border-box;
   }
 `;
