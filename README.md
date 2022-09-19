@@ -158,10 +158,25 @@
   
   - 논의내용
     - **댓글 등록시** : InitialState로 프로필 이미지, 등록일을 지정하여 사용자가 별도의 타이핑을 하지 않도록 하는 방안 <br>
+    
       -> ❗ 초기값으로 설정할 경우, 자정이 넘어갈 경우 정확한 날짜 표기에 어려움이 생기는 이슈로 미적용.
      
     - **댓글 등록, 수정시** : 수정 또는 등록을 state 값으로 컨트롤하여 해당되는 상태의 api 호출하는 방안 <br>
+    
       -> ❗ 별도의 state 지정 없이 **id의 유무**로 댓글 등록, 수정을 구분.
+      
+      -> ❗ Comment Type의 id만 Optional로 지정
+      
+    - **인풋의 라벨** : 인풋의 라벨은 꼭 필요할까? 
+    
+      -> ❗디자인상 인푼의 라벨이 없더라도 웹 접근성 면에서 라벨은 필수적이다 [참고](https://www.a11y-collective.com/every-input-needs-a-label/)
+      
+    - **전역 스토어 vs 지역 상태**
+    
+      -> ❗ 컴포넌트 내부에서 참조하는 커스텀 훅이나 전역상태가 많아지면 컴포넌트의 재활용성이 떨어진다.
+      
+      -> ❗ 전역상태가 필요하다면 관리를 위해 전역상태로 넣기위한 기준이 필요할 것 같다. (ex. 2depth이상의 드릴링이 발생하거나)
+
 
 <br>
 - 페이지네이션
@@ -169,6 +184,12 @@
   - 구현내용
   
   - 논의내용
+    - 페이지네이션 컴포넌트내에서의 컴포넌트 추상화 레벨 동일화
+    
+      -> ❗온보딩 기간중 배운내용인 컴포넌트 추상화 수준을 정리해 보자 [참고](https://younuk.notion.site/e2b05f6768934c5092b8c45c16f76077)
+      
+      -> ❗컴포넌트 내부에서의 컴포넌트 선언을 피하자 [참고](https://levelup.gitconnected.com/code-review-avoid-declaring-react-component-inside-parent-component-1768a645f523)
+      
 
 <br>
 - Redux logger, Redux-Devtools 설정
@@ -176,14 +197,21 @@
   - 구현내용
   
   - 논의내용
+    - 미들웨어가 적용되는 순서가 중요할까?
+    
+      -> ❗ 실제로 redux-logger 공식문서에서는 thunk, saga와 같은 미들웨어 이후, 최종적으로 가장 마지막에 등록이 필수적이라고 명시되어 있다.
 
 <br>
 - Redux를 이용한 비동기 처리
   
   - 구현내용
   
+    - redux-tookit-query를 이용해 구현
   - 논의내용
-    - Redux thunk, saga 등 어떠한 미들웨어를 사용하여 비동기 처리를 할 것인지 논의 -> ❗ **Redux Toolkit Query** 사용
+  
+    - Redux thunk, saga 등 어떠한 미들웨어를 사용하여 비동기 처리를 할 것인지 논의 
+    
+      -> ❗ **Redux Toolkit Query** 사용
 
 <br><br>
 
