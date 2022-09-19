@@ -152,9 +152,9 @@
 - 댓글 CRUD
 
   - 구현내용
-    - 댓글 등록 :
+    - 댓글 등록 : id를 제외한 댓글 속성들 POST, id가 number인 경우 json-server가 auto increment
     - 댓글 수정 : api에 해당 댓글의 id를 넘겨주고 정보를 받아 form input의 value로 할당. 수정 등록시 변경된 내용을 업데이트.
-    - 댓글 삭제 : 
+    - 댓글 삭제 : api에 해당 댓글의 id를 전달하여 삭제.
   
   - 논의내용
     - **댓글 등록시** : InitialState로 프로필 이미지, 등록일을 지정하여 사용자가 별도의 타이핑을 하지 않도록 하는 방안 <br>
@@ -195,11 +195,14 @@
 - Redux logger, Redux-Devtools 설정
   
   - 구현내용
+    - devtools: redux-toolkit의 configureStore()을 이용해서 간단하게 설정
+    - logger: store에 미들웨어 설정 
   
   - 논의내용
     - 미들웨어가 적용되는 순서가 중요할까?
     
-      -> ❗ 실제로 redux-logger 공식문서에서는 thunk, saga와 같은 미들웨어 이후, 최종적으로 가장 마지막에 등록이 필수적이라고 명시되어 있다.
+      -> ❗ 실제로 [redux-logger 공식문서](https://github.com/LogRocket/redux-logger#usage)에서는 thunk, saga와 같은 미들웨어 이후, 최종적으로 가장 마지막에 등록이 필수적이라고 명시되어 있다.
+      > Note: logger must be the last middleware in chain, otherwise it will log thunk and promise, not actual actions
 
 <br>
 - Redux를 이용한 비동기 처리
@@ -207,6 +210,12 @@
   - 구현내용
   
     - redux-tookit-query를 이용해 구현
+      - 내부적으로 thunk(createAsyncThunk) 사용
+      - 서버 데이터 캐싱
+      - createApi는 createSlice 기반으로 apiSlice를 생성함.
+        - 따라서 내부적으로 immer를 사용.
+        - 상태 업데이트를 불변하게 해서 렌더링 효율 향상.
+        
   - 논의내용
   
     - Redux thunk, saga 등 어떠한 미들웨어를 사용하여 비동기 처리를 할 것인지 논의 
